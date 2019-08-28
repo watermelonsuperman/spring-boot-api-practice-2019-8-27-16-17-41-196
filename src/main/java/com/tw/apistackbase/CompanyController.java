@@ -26,8 +26,8 @@ public class CompanyController {
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public List<String> getAllCompanies(){
-		//Employee[] employees = {new Employee(1,"小红",20,"female",20),new Employee(2,"小明",20,"male",20)};
-		//companies.add(new Company(1,"中原银行",2000,employees));
+		Employee[] employees = {new Employee(1,"小红",20,"female",20),new Employee(2,"小明",20,"male",20)};
+		companies.add(new Company(1,"中原银行",2000,employees));
 		List<String> companyNames = new ArrayList();
 		for(Company company : companies){
 			companyNames.add(company.getCompanyName());
@@ -68,9 +68,14 @@ public class CompanyController {
 		for(Company company : companies){
 			companyNames.add(company.getCompanyName());
 		}
-		for(int i = limit * (page-1);i < limit * page;i++){
-			resultNames.add(companyNames.get(i));
+		if(companyNames.size()<limit){
+			resultNames = companyNames;
+		}else{
+			for(int i = limit * (page-1);i < limit * page;i++){
+				resultNames.add(companyNames.get(i));
+			}
 		}
+		
 		
 		return resultNames;
 	}
@@ -104,5 +109,6 @@ public class CompanyController {
 		}
 		return companies;
 	}
+	
 
 }
